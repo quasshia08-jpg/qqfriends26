@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>11:11 — The Circle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0b10; --card:#12131a; --text:#f6f4ef; --muted:#8e8e99;
+  --line:rgba(255,255,255,.09); --accent:#c7ff5b; --pink:#ff7bb8; --blue:#7bdcff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;
+  overflow-x:hidden;cursor:default;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:-3;
+  background:
+   radial-gradient(circle at 15% 10%,rgba(199,255,91,.09),transparent 25%),
+   radial-gradient(circle at 85% 35%,rgba(255,123,184,.08),transparent 28%),
+   radial-gradient(circle at 50% 100%,rgba(123,220,255,.07),transparent 30%);
+}
+body:after{
+ content:"";position:fixed;inset:0;pointer-events:none;z-index:30;opacity:.025;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='3' stitchTiles='stitch' type='fractalNoise'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+button{font:inherit}
+a{text-decoration:none;color:inherit}
+nav{
+ position:fixed;top:0;left:0;width:100%;padding:18px 5%;z-index:100;
+ display:flex;justify-content:space-between;align-items:center;
+ background:rgba(11,11,16,.62);backdrop-filter:blur(18px);
+ border-bottom:1px solid var(--line)
+}
+.logo{font-family:"Space Grotesk";font-weight:700;letter-spacing:-1px}
+.logo span{color:var(--accent)}
+.navlinks{display:flex;gap:24px;font-size:11px;color:#aaa;letter-spacing:1px}
+.navlinks a:hover{color:var(--accent)}
+.hero{min-height:100vh;padding:150px 7% 80px;display:grid;place-items:center;position:relative}
+.hero-inner{max-width:1200px;width:100%;text-align:center}
+.pill{
+ display:inline-flex;gap:8px;align-items:center;padding:8px 13px;border:1px solid var(--line);
+ border-radius:100px;color:#bdbdc5;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+ background:rgba(255,255,255,.025)
+}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 15px var(--accent)}
+.hero h1{
+ font-family:"Space Grotesk";font-size:clamp(70px,15vw,190px);line-height:.82;
+ letter-spacing:-.085em;margin:30px 0 20px;
+}
+.hero h1 .lime{color:var(--accent)}
+.hero h1 .outline{
+ color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.65)
+}
+.hero p{max-width:520px;margin:auto;color:var(--muted);line-height:1.8;font-size:14px}
+.hero-actions{display:flex;justify-content:center;gap:12px;margin-top:35px;flex-wrap:wrap}
+.btn{
+ border:1px solid var(--line);background:#15161e;color:white;padding:13px 20px;border-radius:100px;
+ cursor:pointer;transition:.25s;font-size:11px;letter-spacing:.7px
+}
+.btn:hover{transform:translateY(-3px);border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);color:#10120b;border-color:var(--accent);font-weight:700}
+.scrollhint{margin-top:70px;color:#555863;font-size:9px;letter-spacing:4px;text-transform:uppercase}
+section{padding:110px 6%}
+.wrap{max-width:1180px;margin:auto}
+.kicker{color:var(--accent);font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px}
+.heading{font-family:"Space Grotesk";font-size:clamp(38px,6vw,72px);letter-spacing:-.06em;line-height:.95}
+.sub{color:var(--muted);font-size:13px;line-height:1.8;max-width:520px;margin-top:18px}
+
+.members{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:55px}
+.member{
+ position:relative;min-height:270px;border:1px solid var(--line);border-radius:22px;
+ background:linear-gradient(145deg,#171820,#0f1016);padding:24px;overflow:hidden;
+ cursor:pointer;transition:transform .35s,border-color .35s
+}
+.member:hover{transform:translateY(-8px) rotate(.3deg);border-color:rgba(199,255,91,.35)}
+.member:nth-child(3n+2){background:linear-gradient(145deg,#19151d,#101016)}
+.member:nth-child(3n){background:linear-gradient(145deg,#121a1d,#0f1016)}
+.member .index{font-size:10px;color:#646774;letter-spacing:2px}
+.avatar{
+ width:76px;height:76px;border-radius:50%;margin-top:45px;display:grid;place-items:center;
+ font-family:"Space Grotesk";font-size:28px;font-weight:600;color:#0d0e11;
+ background:var(--c);box-shadow:0 0 50px color-mix(in srgb,var(--c) 20%,transparent)
+}
+.member h3{font-family:"Space Grotesk";font-size:27px;margin-top:17px;letter-spacing:-1px}
+.member .tap{position:absolute;right:22px;bottom:22px;color:#646774;font-size:9px;letter-spacing:1px}
+.member .orb{position:absolute;width:160px;height:160px;border-radius:50%;right:-70px;top:-70px;background:var(--c);opacity:.07;filter:blur(4px)}
+
+.playground{margin-top:55px;display:grid;grid-template-columns:1.25fr .75fr;gap:14px}
+.panel{
+ border:1px solid var(--line);border-radius:24px;background:rgba(255,255,255,.025);
+ padding:30px;min-height:300px
+}
+.panel-title{font-family:"Space Grotesk";font-size:24px;letter-spacing:-1px}
+.panel-desc{color:var(--muted);font-size:12px;line-height:1.7;margin-top:8px}
+.generator{
+ min-height:210px;display:grid;place-items:center;text-align:center;border:1px dashed rgba(255,255,255,.12);
+ border-radius:18px;margin-top:22px;padding:25px
+}
+.generated-name{font-family:"Space Grotesk";font-size:clamp(35px,5vw,60px);letter-spacing:-.07em}
+.generated-label{color:#777984;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:25px}
+.chip{padding:8px 11px;border-radius:100px;border:1px solid var(--line);font-size:10px;color:#aaa;cursor:pointer}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.statbox{height:100%;display:flex;flex-direction:column;justify-content:space-between}
+.bigstat{font-family:"Space Grotesk";font-size:100px;line-height:.8;letter-spacing:-.1em;color:var(--accent)}
+.smallcaps{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#676a75}
+
+.constellation{
+ margin-top:60px;height:470px;border:1px solid var(--line);border-radius:28px;
+ position:relative;overflow:hidden;background:
+ radial-gradient(circle at 50% 50%,rgba(199,255,91,.07),transparent 30%),
+ #0c0d12
+}
+.constellation:before,.constellation:after{
+ content:"";position:absolute;inset:10% 20%;border:1px solid rgba(255,255,255,.04);border-radius:50%;
+ transform:rotate(18deg)
+}
+.constellation:after{inset:20% 10%;transform:rotate(-23deg)}
+.starpoint{
+ position:absolute;width:9px;height:9px;border-radius:50%;background:var(--accent);
+ box-shadow:0 0 20px var(--accent);cursor:pointer;z-index:2
+}
+.starpoint:after{
+ content:attr(data-name);position:absolute;left:15px;top:-4px;white-space:nowrap;
+ font-size:9px;color:#777984;letter-spacing:1px
+}
+.s1{left:18%;top:28%}.s2{left:34%;top:60%}.s3{left:48%;top:23%}.s4{left:62%;top:47%}
+.s5{left:78%;top:25%}.s6{left:70%;top:76%}.s7{left:27%;top:82%}.s8{left:54%;top:75%}
+.s9{left:86%;top:57%}.s10{left:42%;top:42%}.s11{left:11%;top:65%}
+.line{position:absolute;height:1px;background:linear-gradient(90deg,transparent,rgba(199,255,91,.35),transparent);transform-origin:left center;opacity:.5}
+
+.secret{
+ text-align:center;padding:150px 20px
+}
+.secret h2{font-family:"Space Grotesk";font-size:clamp(45px,8vw,95px);letter-spacing:-.08em}
+.secret h2 span{color:var(--pink)}
+.secret p{max-width:480px;margin:20px auto;color:var(--muted);line-height:1.8;font-size:13px}
+.secret-btn{
+ border:0;background:transparent;color:#777;cursor:pointer;font-size:10px;letter-spacing:3px;
+ text-transform:uppercase;margin-top:20px
+}
+.secret-btn:hover{color:var(--pink)}
+
+footer{
+ border-top:1px solid var(--line);padding:35px 6%;display:flex;justify-content:space-between;
+ color:#5e606b;font-size:9px;letter-spacing:2px;text-transform:uppercase
+}
+
+.modal{
+ position:fixed;inset:0;z-index:200;background:rgba(5,5,8,.78);backdrop-filter:blur(18px);
+ display:none;place-items:center;padding:20px
+}
+.modal.show{display:grid}
+.modal-card{
+ max-width:550px;width:100%;border:1px solid rgba(255,255,255,.12);border-radius:28px;
+ padding:40px;background:linear-gradient(145deg,#1a1b23,#0e0f14);position:relative;
+ animation:pop .3s ease
+}
+.close{position:absolute;right:20px;top:20px;background:none;border:0;color:#888;cursor:pointer;font-size:20px}
+.modal-num{color:var(--accent);font-size:10px;letter-spacing:3px}
+.modal h2{font-family:"Space Grotesk";font-size:55px;letter-spacing:-.07em;margin:12px 0}
+.modal p{color:#999ba5;line-height:1.8;font-size:13px}
+.modal-tag{display:inline-block;margin-top:22px;padding:8px 12px;border:1px solid var(--line);border-radius:100px;color:#aaa;font-size:10px}
+
+.toast{
+ position:fixed;bottom:25px;left:50%;transform:translate(-50%,20px);opacity:0;z-index:300;
+ padding:13px 18px;border-radius:100px;background:#f4f3ef;color:#111;font-size:11px;
+ transition:.35s;pointer-events:none
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s,transform .8s}
+.reveal.show{opacity:1;transform:none}
+@keyframes pop{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+
+@media(max-width:850px){
+ .navlinks{display:none}
+ .members{grid-template-columns:1fr 1fr}
+ .playground{grid-template-columns:1fr}
+ .constellation{height:380px}
+}
+@media(max-width:560px){
+ section{padding:85px 5%}
+ .members{grid-template-columns:1fr}
+ .member{min-height:245px}
+ .hero h1{font-size:70px}
+ .bigstat{font-size:75px}
+ footer{flex-direction:column;gap:12px;text-align:center}
+}
+</style>
+</head>
+
+<body>
+<nav>
+  <div class="logo">11<span>:</span>11</div>
+  <div class="navlinks">
+    <a href="#people">PEOPLE</a>
+    <a href="#play">PLAY</a>
+    <a href="#stars">STARS</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="pill"><span class="dot"></span> THE INNER CIRCLE · EST. SOMEWHERE ALONG THE WAY</div>
+    <h1>THE <span class="lime">INNER</span><br><span class="outline">CIRCLE</span></h1>
+    <p>A tiny internet corner for eleven names, random memories, questionable decisions, and the people who somehow made them worth remembering.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="#people">Meet the circle ↓</a>
+      <button class="btn" onclick="randomFriend()">Pick someone ✦</button>
+    </div>
+    <div class="scrollhint">there are things hidden below</div>
+  </div>
+</header>
+
+<section id="people">
+<div class="wrap">
+  <div class="kicker reveal">01 — The roster</div>
+  <h2 class="heading reveal">Eleven names.<br>Zero explanations.</h2>
+  <p class="sub reveal">Click a card. Some things happen. Maybe. We are not responsible for what you discover.</p>
+
+  <div class="members">
+    <article class="member reveal" style="--c:#c7ff5b" data-name="Linkeye"><div class="orb"></div><div class="index">01 / 11</div><div class="avatar">L</div><h3>Linkeye</h3><div class="tap">CLICK ME ↗</div></article>
+    <article class="member reveal" style="--c:#ff7bb8" data-name="Splendiz"><div class="orb"></div><div class="index">02 / 11</div><div class="avatar">S</div><h3>Splendiz</h3><div class="tap">CLICK ME ↗</div></article>
+    <article class="member reveal" style="--c:#7bdcff" data-name="Ijanks"><div class="orb"></div><div class="index">03 / 11</div><div class="avatar">I</div><h3>Ijanks</h3><div class="tap">CLICK ME ↗</div></article>
+    <article class="member reveal" style="--c:#ffd36e" data-name="Adlawan"><div class="orb"></div><div class="index">04 / 11</div><div class="avatar">A</div><h3>Adlawan</h3><div class="tap">CLICK ME ↗</div></article>
+    <article class="member reveal" style="--c:#b995ff" data-name="Loranis"><div class="orb"></div><div class="index">05 / 11</div><div class="avatar">L</div><h3>Loranis</h3><div class="tap">CLICK ME ↗</div></article>
+    <article class="member reveal" style="--c:#72f2c1" data-name="Ricoyan"><div class="orb"></div><div class="index">06 / 11</div><div class="avatar">R</div><h3>Ricoyan</h3><div class="tap">CLICK ME ↗</div></article>
+    <article class="member reveal" style="--c:#ff9b70" data-name="Simarka"><div class="orb"></div><div class="index">07 / 11</div><div class="avatar">S</div><h3>Simarka</h3><div class="tap">CLICK ME ↗</div></article>
+    <article class="member reveal" style="--c:#7e9cff" data-name="Prozena"><div class="orb"></div><div class="index">08 / 11</div><div class="avatar">P</div><h3>Prozena</h3><div class="tap">CLICK ME ↗</div></article>
+    <article class="member reveal" style="--c:#f4e36b" data-name="Adanion"><div class="orb"></div><div class="index">09 / 11</div><div class="avatar">A</div><h3>Adanion</h3><div class="tap">CLICK ME ↗</div></article>
+    <article class="member reveal" style="--c:#ff83d0" data-name="Joriwack"><div class="orb"></div><div class="index">10 / 11</div><div class="avatar">J</div><h3>Joriwack</h3><div class="tap">CLICK ME ↗</div></article>
+    <article class="member reveal" style="--c:#a8ff8d" data-name="Remidon"><div class="orb"></div><div class="index">11 / 11</div><div class="avatar">R</div><h3>Remidon</h3><div class="tap">CLICK ME ↗</div></article>
+  </div>
+</div>
+</section>
+
+<section id="play">
+<div class="wrap">
+  <div class="kicker reveal">02 — Playground</div>
+  <h2 class="heading reveal">Okay, but<br>who's next?</h2>
+  <div class="playground">
+    <div class="panel reveal">
+      <div class="panel-title">Random Circle Picker ✦</div>
+      <div class="panel-desc">Press the button. Let fate make the decision.</div>
+      <div class="generator">
+        <div>
+          <div class="generated-label">Tonight's pick</div>
+          <div class="generated-name" id="randomName">?</div>
+          <button class="btn primary" onclick="randomFriend()" style="margin-top:20px">Spin again</button>
+        </div>
+      </div>
+      <div class="chips">
+        <div class="chip" onclick="showToast('11 names. 11 personalities. Good luck.')">11 people</div>
+        <div class="chip" onclick="showToast('There is no context here. That is intentional.')">No context</div>
+        <div class="chip" onclick="showToast('You found a clickable thing. Congratulations.')">Suspicious button</div>
+      </div>
+    </div>
+    <div class="panel statbox reveal">
+      <div>
+        <div class="panel-title">The unofficial statistic.</div>
+        <div class="panel-desc">Scientifically unverified.</div>
+      </div>
+      <div class="bigstat">∞</div>
+      <div class="smallcaps">Memories loading...</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="stars">
+<div class="wrap">
+  <div class="kicker reveal">03 — The constellation</div>
+  <h2 class="heading reveal">Different stars.<br>Same sky.</h2>
+  <p class="sub reveal">Tap a star. You might unlock absolutely nothing. Or something.</p>
+  <div class="constellation reveal">
+    <div class="starpoint s1" data-name="Linkeye"></div>
+    <div class="starpoint s2" data-name="Splendiz"></div>
+    <div class="starpoint s3" data-name="Ijanks"></div>
+    <div class="starpoint s4" data-name="Adlawan"></div>
+    <div class="starpoint s5" data-name="Loranis"></div>
+    <div class="starpoint s6" data-name="Ricoyan"></div>
+    <div class="starpoint s7" data-name="Simarka"></div>
+    <div class="starpoint s8" data-name="Prozena"></div>
+    <div class="starpoint s9" data-name="Adanion"></div>
+    <div class="starpoint s10" data-name="Joriwack"></div>
+    <div class="starpoint s11" data-name="Remidon"></div>
+  </div>
+</div>
+</section>
+
+<section class="secret reveal">
+  <div class="kicker">04 — Classified</div>
+  <h2>There is a <span>secret.</span></h2>
+  <p>Maybe it's a button. Maybe it's not. Maybe you have to click the right thing seven times. Who knows?</p>
+  <button class="secret-btn" id="secretBtn">do not click this</button>
+</section>
+
+<footer>
+  <span>11:11 — The Inner Circle</span>
+  <span>made for the people in the room</span>
+</footer>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <button class="close" onclick="closeModal()">×</button>
+    <div class="modal-num" id="modalNum">01 / 11</div>
+    <h2 id="modalName">Linkeye</h2>
+    <p id="modalText">No bio. No schedule. No explanation. Just a name that belongs here.</p>
+    <div class="modal-tag">INNER CIRCLE MEMBER</div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const names=["Linkeye","Splendiz","Ijanks","Adlawan","Loranis","Ricoyan","Simarka","Prozena","Adanion","Joriwack","Remidon"];
+
+const observer=new IntersectionObserver(entries=>{
+ entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("show")});
+},{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+function randomFriend(){
+ const n=names[Math.floor(Math.random()*names.length)];
+ const el=document.getElementById("randomName");
+ el.animate([{opacity:0,transform:"scale(.8)"},{opacity:1,transform:"scale(1)"}],{duration:350});
+ el.textContent=n;
+ showToast("The universe picked "+n+" ✦");
+}
+
+function openModal(name){
+ const i=names.indexOf(name);
+ document.getElementById("modalNum").textContent=String(i+1).padStart(2,"0")+" / 11";
+ document.getElementById("modalName").textContent=name;
+ document.getElementById("modalText").textContent="No bio. No schedule. No explanation. Just a name that belongs here. The rest of the story is yours.";
+ document.getElementById("modal").classList.add("show");
+}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+document.querySelectorAll(".member").forEach(card=>{
+ card.addEventListener("click",()=>openModal(card.dataset.name));
+});
+document.querySelectorAll(".starpoint").forEach(star=>{
+ star.addEventListener("click",()=>openModal(star.dataset.name));
+});
+document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
+
+let secretClicks=0;
+document.getElementById("secretBtn").addEventListener("click",()=>{
+ secretClicks++;
+ const b=document.getElementById("secretBtn");
+ if(secretClicks<7){
+   b.textContent=["seriously?","again?","you keep clicking.","interesting.","almost.","one more.","..."][secretClicks-1];
+   showToast("That was "+secretClicks+"/7.");
+ }else{
+   document.body.animate([{filter:"brightness(1)"},{filter:"brightness(1.8)"},{filter:"brightness(1)"}],{duration:700});
+   b.textContent="you found it ✦";
+   showToast("SECRET UNLOCKED — you're officially nosy.");
+   for(let i=0;i<45;i++) confetti();
+ }
+});
+
+function confetti(){
+ const x=document.createElement("i");
+ x.style.cssText=`position:fixed;left:${Math.random()*100}vw;top:-10px;width:5px;height:5px;border-radius:50%;background:${["#c7ff5b","#ff7bb8","#7bdcff","#ffd36e"][Math.floor(Math.random()*4)]};z-index:250;pointer-events:none`;
+ document.body.appendChild(x);
+ const end=window.innerHeight+30;
+ x.animate([{transform:"translateY(0) rotate(0deg)"},{transform:`translateY(${end}px) rotate(${Math.random()*900}deg)`}],{duration:1200+Math.random()*1400,easing:"cubic-bezier(.2,.7,.4,1)"});
+ setTimeout(()=>x.remove(),2800);
+}
+function showToast(msg){
+ const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");
+ clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove("show"),2200);
+}
+document.addEventListener("keydown",e=>{
+ if(e.key==="Escape")closeModal();
+ if(e.key.toLowerCase()==="r")randomFriend();
+});
+</script>
+</body>
+</html>
